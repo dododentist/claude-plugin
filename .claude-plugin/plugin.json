@@ -1,0 +1,21 @@
+{
+  "name": "dododentist",
+  "description": "Read-only dental-clinic administration in Claude. Bundles the DodoDentist connector with guidance for clinic metadata, availability, providers, procedure catalogs, non-identifying calendar blocks and aggregate schedules while keeping patient and clinical data outside the connector.",
+  "version": "0.1.1",
+  "author": {
+    "name": "DodoDentist LLC",
+    "email": "info@dododentist.com",
+    "url": "https://www.dododentist.com/"
+  },
+  "homepage": "https://www.dododentist.com/developers/#mcp",
+  "repository": "https://github.com/dododentist/claude-plugin",
+  "license": "Apache-2.0",
+  "keywords": [
+    "dental-practice",
+    "clinic-administration",
+    "availability",
+    "scheduling",
+    "procedure-catalog",
+    "operations"
+  ]
+}

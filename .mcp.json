@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "dododentist": {
+      "type": "http",
+      "url": "https://mcp.dododentist.com/mcp"
+    }
+  }
+}
