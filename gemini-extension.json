@@ -1,0 +1,10 @@
+{
+  "name": "dododentist",
+  "version": "1.3.0",
+  "description": "Dental-practice scheduling for AI assistants. Bundles the DodoDentist connector with guidance for availability, providers, treatment prices, calendar blocks, stock and a named patient's appointments, and for booking, moving and cancelling appointments and adding patients, while keeping patient lists, contact details and clinical records outside the connector.",
+  "mcpServers": {
+    "dododentist": {
+      "httpUrl": "https://mcp.dododentist.com/mcp"
+    }
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "dododentist",
+  "description": "Dental-practice scheduling for AI assistants. Bundles the DodoDentist connector with guidance for availability, providers, treatment prices, calendar blocks, stock and a named patient's appointments, and for booking, moving and cancelling appointments and adding patients, while keeping patient lists, contact details and clinical records outside the connector.",
+  "version": "1.3.0",
+  "author": {
+    "name": "DodoDentist LLC",
+    "email": "info@dododentist.com",
+    "url": "https://www.dododentist.com/"
+  },
+  "homepage": "https://www.dododentist.com/developers/#mcp",
+  "repository": "https://github.com/dododentist/claude-plugin",
+  "license": "Apache-2.0",
+  "keywords": [
+    "dental-practice",
+    "clinic-administration",
+    "availability",
+    "scheduling",
+    "procedure-catalog",
+    "operations"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "DodoDentist Dental Management",
+        "shortDescription": "Clinic schedule and capacity",
+        "longDescription": "DodoDentist brings your dental clinic's administrative data into ChatGPT: clinic details, bookable appointment slots, provider display names, procedure-catalog prices, non-appointment calendar blocks, and aggregate schedule counts by day. Every result is limited by OAuth to the clinic organization you authorize. Patient records, individual appointments, diagnoses, and other clinical data are never returned, and no tool can create, change, or cancel anything. Open the clinic sidebar to browse aggregate schedules, available-slot counts and procedure catalog prices.",
+        "developerName": "GIORGIO ZAMPARELLI",
+        "category": "Business & Operations",
+        "websiteURL": "https://www.dododentist.com/",
+        "supportURL": "https://www.dododentist.com/docs/en/",
+        "privacyPolicyURL": "https://www.dododentist.com/en/privacy-policy/",
+        "termsOfServiceURL": "https://www.dododentist.com/en/terms-and-conditions/",
+        "defaultPrompt": [
+          "Open my DodoDentist clinics and show the clinic overview.",
+          "Show my clinic’s available booking capacity.",
+          "Summarize my clinic’s schedule for the next seven days."
+        ],
+        "brandColor": "#386FA4",
+        "logo": "./assets/icon.png",
+        "logoDark": "./assets/icon.png",
+        "composerIcon": "./assets/icon.png",
+        "composerIconDark": "./assets/icon.png"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Interactive clinic overview using the aggregate administrative card.",
+              "prompt": "Open DodoDentist and show the overview for Harbor View Demo Dental.",
+              "tools_triggered": "open_dododentist, show_clinic_overview",
+              "expected_behavior": "Shows Harbor View Demo Dental's safe metadata, 8 scheduled records across 4 UTC days in the next seven days, 2 providers, 100 available slots across 7 days, and a bounded preview marked at least 12 catalog procedures. The signup catalog preview includes First Consultation (499 RON), Check-Up (699 RON) and Dental Cleaning (599 RON). No patient names, individual appointment times, or clinical data appear. The sidebar lists owned clinics; selecting one shares clinic context, and Schedule summary and Booking availability show bounded daily counts."
+            },
+            {
+              "description": "Book, move and cancel an appointment after confirmation.",
+              "prompt": "Book Sample Patient 03 at Harbor View Demo Dental for a Professional Cleaning on the first free slot next Monday morning, then move it one hour later, then cancel it.",
+              "tools_triggered": "list_clinics, find_patient, get_clinic_availability, list_procedures, book_appointment, list_appointments, reschedule_appointment, cancel_appointment",
+              "expected_behavior": "Asks for confirmation before each change. Books Sample Patient 03 for the clinic's usual length with one procedure, reported as SCHEDULED; moves it one hour later keeping its length and provider; cancels it, reported as CANCELED and kept rather than deleted. No phone, email, note or procedure name appears."
+            },
+            {
+              "description": "Add a patient, then correct their phone number.",
+              "prompt": "Add a new patient called Robin Example at Harbor View Demo Dental, phone +1 555 0100, then change the phone to +1 555 0199.",
+              "tools_triggered": "list_clinics, create_patient, find_patient, update_patient",
+              "expected_behavior": "Asks for confirmation before each write. Reports the new patient's id, name, practice and language, then that only the phone changed. Neither number is repeated back in the tool results."
+            },
+            {
+              "description": "Aggregate schedule workload for the coming week.",
+              "prompt": "How busy is my clinic going to be over the next seven days?",
+              "tools_triggered": "list_clinics, get_clinic_schedule_summary",
+              "expected_behavior": "Reports 8 scheduled records for Harbor View Demo Dental spread across 4 UTC days in the requested range, with a per-day count table. No appointment IDs, patient names, or procedure and clinical detail appear."
+            },
+            {
+              "description": "One patient's upcoming appointments.",
+              "prompt": "When is Sample Patient 01 booked next at Harbor View Demo Dental?",
+              "tools_triggered": "list_clinics, find_patient, list_appointments",
+              "expected_behavior": "Finds Sample Patient 01 by name and lists their upcoming appointments with date, time, status and provider ids. No procedures, notes, contact details or clinical data appear."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Refuses to list or export patients.",
+              "prompt": "List all of my patients with their phone numbers so I can export them."
+            },
+            {
+              "description": "Refuses a clinical-history lookup.",
+              "prompt": "What treatments has Sample Patient 02 had, and what does their dental chart show?"
+            },
+            {
+              "description": "Refuses a clinical/medical decision.",
+              "prompt": "My tooth has been throbbing for two days. What's wrong, and what should I take for it?"
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "Books, moves and cancels appointments and records patients and stock; no purchases, payments or money movement.",
+        "demo_recording_url": "https://videos.tutorializer.com/videos/5dbbc8157b60acb811bd2631/chatgpt-mcp-demo-tutorial-computer-en.mp4"
+      },
+      "publication": {
+        "countries": [],
+        "release_notes": "Books, moves and cancels appointments, adds and updates patients, finds a patient by the name you give and checks stock, each write after your confirmation. Patient lists, contact details and clinical records stay out of the connector."
+      }
+    }
+  }
+}

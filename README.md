@@ -1,9 +1,11 @@
 # DodoDentist plugin for Claude
 
-Read-only clinic administration inside Claude. This plugin connects to the
-hosted DodoDentist MCP and teaches Claude how to review clinic metadata,
-bookable availability, provider display names, procedure catalogs,
-non-identifying calendar blocks and aggregate schedule counts.
+Dental-practice scheduling inside Claude. This plugin connects to the hosted
+DodoDentist MCP and teaches Claude how to check availability, providers,
+treatment prices, calendar blocks, daily appointment counts and stock, find a
+patient you name and their appointments, and, with your confirmation, book,
+move and cancel appointments, add patients and update their contact details,
+and correct stock counts.
 
 ## Requirements
 
@@ -18,15 +20,18 @@ to copy and nothing to self-host.
   days.”
 - “Show bookable availability and provider display names.”
 - “List the procedure catalog with prices.”
-- “List this week's non-appointment calendar blocks.”
+- “Book Sample Patient 03 for a cleaning next Monday at 10:00.”
+- “Move Sample Patient 01's appointment to Thursday afternoon.”
+- “Add a new patient called Robin Example.”
 
 ## Privacy and safety
 
-The public connector does not expose patient records or contact details,
-individual appointment records, diagnoses, treatment information, notes,
-anamnesis, tooth charts, images or other clinical data. It is read-only and
-does not make diagnoses, treatment recommendations, urgency decisions or
-other medical decisions.
+The connector finds a patient only by the name you give and never lists
+patients. It never returns contact details, notes, the procedures booked,
+diagnoses, treatment information, anamnesis, tooth charts, images or other
+clinical data. Every write asks for your confirmation first; nothing is
+deleted. It does not make diagnoses, treatment recommendations, urgency
+decisions or other medical decisions.
 
 The DodoDentist account you authorize determines which organization Claude can
 access. See the
@@ -42,9 +47,9 @@ as proof that the public listing is live.
 
 ## Contents
 
-- `clinic-administration` — the single skill covering all eight read-only
-  connector tools, identifier/pagination rules, aggregate-count semantics,
-  privacy boundary and unsupported clinical/write requests.
+- `clinic-administration` — the single skill covering all seventeen
+  connector tools, the booking workflow, identifier and version rules, the
+  patient and clinical boundary and unsupported requests.
 - `.mcp.json` — the hosted DodoDentist OAuth connector.
 
 ## Support
@@ -55,3 +60,9 @@ as proof that the public listing is live.
 ## License
 
 Apache-2.0. See [LICENSE](./LICENSE).
+
+## Cross-host package
+
+The repository root is an [Agent Plugins](https://agent-plugins.org/) package: `plugin.json`, `mcp.json`, and `skills/clinic-administration/SKILL.md` install the hosted connector and its workflow together. Claude uses `.claude-plugin/plugin.json` and `.mcp.json`; Gemini CLI uses `gemini-extension.json`; Antigravity uses `com.google.antigravity/`. All adapters use https://mcp.dododentist.com/mcp and the product OAuth flow. No credential is bundled.
+
+Clinic administration only. Do not request patient identities, individual appointments, clinical records, or medical decisions.

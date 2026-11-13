@@ -1,7 +1,7 @@
 {
   "name": "dododentist",
-  "description": "Read-only dental-clinic administration in Claude. Bundles the DodoDentist connector with guidance for clinic metadata, availability, providers, procedure catalogs, non-identifying calendar blocks and aggregate schedules while keeping patient and clinical data outside the connector.",
-  "version": "0.1.1",
+  "description": "Dental-practice scheduling for AI assistants. Bundles the DodoDentist connector with guidance for availability, providers, treatment prices, calendar blocks, stock and a named patient's appointments, and for booking, moving and cancelling appointments and adding patients, while keeping patient lists, contact details and clinical records outside the connector.",
+  "version": "1.3.0",
   "author": {
     "name": "DodoDentist LLC",
     "email": "info@dododentist.com",
